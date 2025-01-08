@@ -36,7 +36,8 @@ frontend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/frontend
-  npm run build --legacy-peer-deps
+  export NODE_OPTIONS=--openssl-legacy-provider
+  npm run build 
 EOF
 
   sleep 2
@@ -59,9 +60,10 @@ frontend_update() {
   pm2 stop ${empresa_atualizar}-frontend
   git pull
   cd /home/deploy/${empresa_atualizar}/frontend
-  npm install
+  npm install --legacy-peer-deps
   rm -rf build
-  npm run build --legacy-peer-deps
+  export NODE_OPTIONS=--openssl-legacy-provider
+  npm run build 
   pm2 start ${empresa_atualizar}-frontend
   pm2 save
 EOF
