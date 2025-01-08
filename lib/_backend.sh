@@ -105,7 +105,7 @@ backend_node_dependencies() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/backend
-  npm install
+  npm install --legacy-peer-deps
 EOF
 
   sleep 2
@@ -125,7 +125,8 @@ backend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/backend
-  npm run build --legacy-peer-deps
+  export NODE_OPTIONS=--openssl-legacy-provider
+  npm run build 
 EOF
 
   sleep 2
@@ -148,11 +149,12 @@ backend_update() {
   pm2 stop ${empresa_atualizar}-backend
   git pull
   cd /home/deploy/${empresa_atualizar}/backend
-  npm install
+  npm install --legacy-peer-deps
   npm update -f
   npm install @types/fs-extra
   rm -rf dist 
-  npm run build --legacy-peer-deps
+  export NODE_OPTIONS=--openssl-legacy-provider
+  npm run build 
   npx sequelize db:migrate
   npx sequelize db:migrate
   npx sequelize db:seed
