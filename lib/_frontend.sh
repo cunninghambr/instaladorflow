@@ -36,7 +36,7 @@ frontend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/frontend
-  npm run build
+  npm run build --legacy-peer-deps
 EOF
 
   sleep 2
