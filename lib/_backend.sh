@@ -125,7 +125,7 @@ backend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/backend
-  npm run build
+  npm run build --legacy-peer-deps
 EOF
 
   sleep 2
@@ -152,7 +152,7 @@ backend_update() {
   npm update -f
   npm install @types/fs-extra
   rm -rf dist 
-  npm run build
+  npm run build --legacy-peer-deps
   npx sequelize db:migrate
   npx sequelize db:migrate
   npx sequelize db:seed
