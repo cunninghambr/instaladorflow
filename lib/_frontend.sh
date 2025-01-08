@@ -61,7 +61,7 @@ frontend_update() {
   cd /home/deploy/${empresa_atualizar}/frontend
   npm install
   rm -rf build
-  npm run build
+  npm run build --legacy-peer-deps
   pm2 start ${empresa_atualizar}-frontend
   pm2 save
 EOF
